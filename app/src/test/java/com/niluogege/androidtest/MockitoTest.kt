@@ -5,28 +5,36 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
-import org.mockito.Mockito.mock
+
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
+
 
 @RunWith(JUnit4::class)
 class MockitoTest {
 
     @Mock
-    lateinit var bean: Bean
+    lateinit var beanAnnotation: Bean
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
     }
 
+
     @Test
     fun mockBean() {
+        val mock: Bean = mock(Bean::class.java)
+        mock.aaa = "aaa"
+        println("方法 aaa = ${mock.aaa} bbb=${mock.bbb} ccc=${mock.ccc}  getBBB=${mock.getBBB()}")
+    }
 
-        val mock = mock(Bean::class.java)
 
-
-        println("方法 aaa = ${mock.aaa} bbb=${mock.bbb} ccc=${mock.ccc}")
-        println("注解mock aaa = ${bean.aaa} bbb=${bean.bbb} ccc=${bean.ccc}")
+    @Test
+    fun mockByAnnotation() {
+        whenever(beanAnnotation.getBBB()).thenReturn(72)
+        println("注解mock aaa = ${beanAnnotation.aaa} bbb=${beanAnnotation.bbb} ccc=${beanAnnotation.ccc} getBBB=${beanAnnotation.getBBB()}")
     }
 
 }
