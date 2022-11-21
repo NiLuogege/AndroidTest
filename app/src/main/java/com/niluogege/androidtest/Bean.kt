@@ -9,10 +9,19 @@ open class Bean {
         return "Bean(aaa=$aaa, bbb=$bbb, ccc=$ccc)"
     }
 
-
-   open fun getBBB(): Int {
-        return bbb?:0
+    fun getAAA(): String {
+        return aaa ?: "null.."
     }
+
+    //kotlin方法默认为final的
+    open fun getBBB(): Int {
+        return bbb ?: 0
+    }
+
+    fun getCCC():CCC{
+        return CCC()
+    }
+
 
 }
 
