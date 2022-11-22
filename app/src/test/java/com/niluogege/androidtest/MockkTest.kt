@@ -3,6 +3,7 @@ package com.niluogege.androidtest
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.impl.annotations.SpyK
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -14,6 +15,7 @@ class MockkTest {
 
     @MockK
     lateinit var beanAnnotation: Bean
+
 
     @Before
     fun setUp() {
@@ -41,6 +43,22 @@ class MockkTest {
         println("mock 后 getAAA=${mock.getAAA()}")
     }
 
+
+    /**
+     * 验证通过 spyk 方法 来创建对象
+     * 值得注意的是： spyk 是真的创建一个对象，而 mockk 只是mock，mock出来的方法什么的都不是new出来的 返回值
+     */
+    @Test
+    fun testSpyk(){
+        //通过 spyk 创建的 类 返回原始的返回值
+        val mather = spyk<Mother>()
+        println(mather.giveMoney())
+
+        //通过 mockk 创建的 类 需要mock方法的返回
+        val motherMockk = mockk<Mother>()
+        every { motherMockk.giveMoney() } returns 30
+        println(motherMockk.giveMoney())
+    }
 
     /**
      * verify 用例：
