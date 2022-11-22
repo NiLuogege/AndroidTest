@@ -88,7 +88,7 @@ class MockkTest {
         //当调用 mother.giveMoney() 返回 30
         every { mother.giveMoney() } returns 30
 
-        //调用一次
+        //调用一次会将 money 加到 30
         kid.wantMoney()
 
         println("money=${kid.money}")
@@ -96,6 +96,9 @@ class MockkTest {
         // Given
         val slot = slot<Int>()
         every { mother.inform(capture(slot)) } just Runs
+
+        //触发，会给 slot赋值 ，赋值的时候 money为30
+        kid.wantMoney()
 
         // Then
         assertEquals(30, slot.captured)
