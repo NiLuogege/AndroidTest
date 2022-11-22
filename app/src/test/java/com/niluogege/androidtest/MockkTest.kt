@@ -49,8 +49,11 @@ class MockkTest {
     @Test
     fun verifyDemo() {
         // When
+        //mock mother
         val mother = mockk<Mother>(relaxed = true)
+        //通过mock来的 mother 创建 kid
         val kid = Kid(mother)
+        //当调用 mock的mother的 giveMoney 返回30
         every { mother.giveMoney() } returns 30
 
         // Given
@@ -85,7 +88,7 @@ class MockkTest {
         val mother = mockk<Mother>(relaxed = true)
         val kid = Kid(mother)
 
-        //当调用 mother.giveMoney() 返回 30
+        //设置监听
         every { mother.giveMoney() } returns 30
 
         //调用一次会将 money 加到 30
