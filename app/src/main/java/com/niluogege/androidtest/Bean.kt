@@ -10,6 +10,7 @@ open class Bean {
     }
 
     fun getAAA(): String {
+        getDDD("call in getAAA")
         return aaa ?: "null.."
     }
 
@@ -22,6 +23,9 @@ open class Bean {
         return CCC()
     }
 
+    fun getDDD(test:String){
+        println("hhh=$test")
+    }
 
 }
 
