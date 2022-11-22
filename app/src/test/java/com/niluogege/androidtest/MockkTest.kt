@@ -17,6 +17,7 @@ class MockkTest {
 
     @Before
     fun setUp() {
+        //这里的配置只会作用到注解创建的类上
         MockKAnnotations.init(this, relaxed = true, relaxUnitFun = true)
     }
 
@@ -74,5 +75,30 @@ class MockkTest {
         }
     }
 
+    /**
+     * capture 用例：
+     * 用于获取 参数数据
+     */
+    @Test
+    fun captureDemo() {
+        // When
+        val mother = mockk<Mother>(relaxed = true)
+        val kid = Kid(mother)
+
+        //当调用 mother.giveMoney() 返回 30
+        every { mother.giveMoney() } returns 30
+
+        //调用一次
+        kid.wantMoney()
+
+        println("money=${kid.money}")
+
+        // Given
+        val slot = slot<Int>()
+        every { mother.inform(capture(slot)) } just Runs
+
+        // Then
+        assertEquals(30, slot.captured)
+    }
 
 }
